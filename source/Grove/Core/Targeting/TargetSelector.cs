@@ -22,7 +22,7 @@
 
 
     public TargetSelector AddEffect(
-      Func<IsValidTargetBuilder, IsValidTargetBuilder> isValid, 
+      Func<IsValidTargetBuilder, IsValidTargetBuilder> isValid,
       Action<TargetValidatorParameters> configure = null)
     {
       var validatorBuilder = isValid(new IsValidTargetBuilder());
@@ -38,11 +38,19 @@
       }
 
       _effectValidators.Add(new TargetValidator(validatorParameters));
-      
+
       return this;
     }
 
-    public TargetSelector AddCost(Func<IsValidTargetBuilder, IsValidTargetBuilder> isValid, 
+    public TargetSelector AddBolsterEffect()
+    {
+      return AddEffect(trg => trg.Is.Card(c =>
+              c.Is().Creature && c.Controller.Battlefield.Creatures.All(x => x.Toughness >= c.Toughness),
+              ControlledBy.SpellOwner).On.Battlefield(),
+            trg => trg.MustBeTargetable = false);
+    }
+
+    public TargetSelector AddCost(Func<IsValidTargetBuilder, IsValidTargetBuilder> isValid,
       Action<TargetValidatorParameters> configure = null)
     {
       var validatorBuilder = isValid(new IsValidTargetBuilder());
@@ -56,10 +64,10 @@
       {
         configure(validatorParameters);
       }
-      
+
       _costValidators.Add(new TargetValidator(validatorParameters));
       return this;
-    }        
+    }
 
     public void Initialize(Card owningCard, Game game)
     {

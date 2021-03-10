@@ -24,13 +24,8 @@
         {
           p.Text = "When Elite Scaleguard enters the battlefield, bolster 2";
           p.Trigger(new OnZoneChanged(to: Zone.Battlefield));
-          p.Effect = () => new ApplyModifiersToTargets(() => new AddCounters(
-            () => new PowerToughness(1, 1), count: 2)).SetTags(EffectTag.IncreasePower, EffectTag.IncreaseToughness);
-          p.TargetSelector.AddEffect(
-            trg => trg.Is.Card(c => c.Is().Creature && 
-            c.Controller.Battlefield.Creatures.All(x => x.Toughness >= c.Toughness),
-            ControlledBy.SpellOwner).On.Battlefield(),
-            trg => trg.MustBeTargetable = false);
+          p.Effect = () => new Put11CountersOnTargets(2);
+          p.TargetSelector.AddBolsterEffect();
 
           p.TargetingRule(new EffectOrCostRankBy(rank: c => -c.Score, controlledBy: ControlledBy.SpellOwner));
         })
