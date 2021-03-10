@@ -148,7 +148,7 @@
         return false;
       }
 
-      if (OwningCard.Is().Planeswalker && Turn.Events.HasAnyLoyalityAbilityBeenActivated(OwningCard))
+      if (OwningCard.Is().Planeswalker && Turn.Events.HasAnyLoyaltyAbilityBeenActivated(OwningCard))
       {
         return false;
       }

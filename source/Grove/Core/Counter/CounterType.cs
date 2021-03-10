@@ -16,6 +16,6 @@
     Fuse,
     Growth,
     Gem,
-    Loyality
+    Loyalty
   }
 }

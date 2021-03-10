@@ -19,7 +19,7 @@
 
         RunGame(1);
         
-        Equal(6, C(jace).Loyality);
+        Equal(6, C(jace).Loyalty);
         Equal(Zone.Graveyard, C(island).Zone);
       }
     }

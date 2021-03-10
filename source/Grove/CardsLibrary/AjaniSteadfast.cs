@@ -19,13 +19,13 @@
           "{+1}: Until end of turn, up to one target creature gets +1/+1 and gains first strike, vigilance, and lifelink.{EOL}" +
           "{-2}: Put a +1/+1 counter on each creature you control and a loyalty counter on each other planeswalker you control.{EOL}" +
           "{-7}: You get an emblem with 'If a source would deal damage to you or a planeswalker you control, prevent all but 1 of that damage.'")
-        .Loyality(4)
+        .Loyalty(4)
         .ActivatedAbility(p =>
           {
             p.Text =
               "{+1}: Until end of turn, up to one target creature gets +1/+1 and gains first strike, vigilance, and lifelink.";
 
-            p.Cost = new AddCountersCost(CounterType.Loyality, 1);
+            p.Cost = new AddCountersCost(CounterType.Loyalty, 1);
 
             p.Effect = () => new ApplyModifiersToTargets(
               () => new AddPowerAndToughness(1, 1) {UntilEot = true},
@@ -44,7 +44,7 @@
             p.Text =
               "{-2}: Put a +1/+1 counter on each creature you control and a loyalty counter on each other planeswalker you control.{EOL}";
 
-            p.Cost = new RemoveCounters(CounterType.Loyality, 2);
+            p.Cost = new RemoveCounters(CounterType.Loyalty, 2);
 
             p.Effect = () => new CompoundEffect(
               new ApplyModifiersToPermanents(
@@ -52,7 +52,7 @@
                 modifier: () => new AddCounters(() => new PowerToughness(1, 1), 1)),
               new ApplyModifiersToPermanents(
                 selector: (c, ctx) => c.Is().Planeswalker && ctx.You == c.Controller && ctx.OwningCard != c,
-                modifier: () => new AddCounters(() => new SimpleCounter(CounterType.Loyality), 1)));
+                modifier: () => new AddCounters(() => new SimpleCounter(CounterType.Loyalty), 1)));
 
             p.TimingRule(new OnFirstMain());
             p.ActivateAsSorcery = true;
@@ -62,7 +62,7 @@
             p.Text =
               "{-7}: You get an emblem with 'If a source would deal damage to you or a planeswalker you control, prevent all but 1 of that damage.'";
 
-            p.Cost = new RemoveCounters(CounterType.Loyality, 7);
+            p.Cost = new RemoveCounters(CounterType.Loyalty, 7);
 
             p.Effect = () => new CreateEmblem(
               text: "If a source would deal damage to you or a planeswalker you control, prevent all but 1 of that damage.",

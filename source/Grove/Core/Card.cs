@@ -188,7 +188,7 @@
       get
       {
         return Is().Planeswalker 
-          ? CountersCount(CounterType.Loyality) - _counters.Count
+          ? CountersCount(CounterType.Loyalty) - _counters.Count
           : _counters.Count;
       }
     }
@@ -307,13 +307,13 @@
       get { return _strenght.Power; }
     }
 
-    public int? Loyality
+    public int? Loyalty
     {
       get
       {
         return Zone == Zone.Battlefield && Is().Planeswalker
-          ? CountersCount(CounterType.Loyality) 
-          : _base.Value.Loyality;
+          ? CountersCount(CounterType.Loyalty) 
+          : _base.Value.Loyalty;
       }
     }
 
@@ -464,7 +464,7 @@
 
       if (Is().Planeswalker)
       {
-        RemoveCounters(CounterType.Loyality, damage.Amount);
+        RemoveCounters(CounterType.Loyalty, damage.Amount);
       }
       else
       {

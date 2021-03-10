@@ -138,7 +138,7 @@
       return _lifeChanged.Any(x => x.Player == player && x.IsLifeLoss);
     }   
 
-    public bool HasAnyLoyalityAbilityBeenActivated(Card card)
+    public bool HasAnyLoyaltyAbilityBeenActivated(Card card)
     {
       return _planeswalkerActivations.Contains(card);
     }

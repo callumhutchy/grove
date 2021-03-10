@@ -20,12 +20,12 @@
         "{+1}: Create a 3/3 black Beast creature token with deathtouch.{EOL}" +
         "{-3}: Destroy target creature. You gain life equal to its toughness.{EOL}" +
         "{-8}: Target opponent gets an emblem with 'Whenever a creature attacks you, it gets +5/+5 and gains trample until end of turn.'")
-        .Loyality(5)
+        .Loyalty(5)
         .ActivatedAbility(p =>
         {
           p.Text = "{+1}: Destroy another target planeswalker.";
 
-          p.Cost = new AddCountersCost(CounterType.Loyality, 1);
+          p.Cost = new AddCountersCost(CounterType.Loyalty, 1);
           p.Effect = () => new DestroyTargetPermanents();
           p.TargetSelector.AddEffect(trg => trg.Is.Card(c => c.Is().Planeswalker).On.Battlefield());
           p.TargetingRule(new EffectDestroy());
@@ -36,7 +36,7 @@
         .ActivatedAbility(p =>
         {
           p.Text = "{+1}: Create a 3/3 black Beast creature token with deathtouch.";
-          p.Cost = new AddCountersCost(CounterType.Loyality, 1);
+          p.Cost = new AddCountersCost(CounterType.Loyalty, 1);
 
           p.Effect = () => new CreateTokens(
               count: 1,
@@ -55,7 +55,7 @@
          {
            p.Text = "{-3}: Destroy target creature. You gain life equal to its toughness.";
 
-           p.Cost = new RemoveCounters(CounterType.Loyality, 3);
+           p.Cost = new RemoveCounters(CounterType.Loyalty, 3);
            p.Effect = () => new CompoundEffect(
               new DestroyTargetPermanents(),
               new ChangeLife(
@@ -73,7 +73,7 @@
           p.Text =
             "{-8}: Target opponent gets an emblem with 'Whenever a creature attacks you, it gets +5/+5 and gains trample until end of turn.'";
 
-          p.Cost = new RemoveCounters(CounterType.Loyality, 8);
+          p.Cost = new RemoveCounters(CounterType.Loyalty, 8);
 
           p.Effect = () => new CreateEmblem(
             text: "Whenever a creature attacks you, it gets +5/+5 and gains trample until end of turn.",

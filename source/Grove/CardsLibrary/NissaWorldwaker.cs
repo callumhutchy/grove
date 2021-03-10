@@ -18,11 +18,11 @@
         .Text("{+1}: Target land you control becomes a 4/4 Elemental creature with trample. It's still a land.{EOL}" +
         "{+1}: Untap up to four target Forests.{EOL}" +
         "{-7}: Search your library for any number of basic land cards, put them onto the battlefield, then shuffle your library. Those lands become 4/4 Elemental creatures with trample. They're still lands.")
-        .Loyality(3)
+        .Loyalty(3)
         .ActivatedAbility(p =>
         {
           p.Text = "{+1}: Target land you control becomes a 4/4 Elemental creature with trample. It's still a land.";
-          p.Cost = new AddCountersCost(CounterType.Loyality, 1);
+          p.Cost = new AddCountersCost(CounterType.Loyalty, 1);
 
           p.Effect = () => new ApplyModifiersToTargets(
            () => new ChangeToCreature(
@@ -41,7 +41,7 @@
         .ActivatedAbility(p =>
           {
             p.Text = "{+1}: Untap up to four target Forests.";
-            p.Cost = new AddCountersCost(CounterType.Loyality, 1);
+            p.Cost = new AddCountersCost(CounterType.Loyalty, 1);
 
             p.Effect = () => new UntapTargetPermanents();
 
@@ -61,7 +61,7 @@
         .ActivatedAbility(p =>
         {
           p.Text = "{-7}: Search your library for any number of basic land cards, put them onto the battlefield, then shuffle your library. Those lands become 4/4 Elemental creatures with trample. They're still lands.";
-          p.Cost = new RemoveCounters(CounterType.Loyality, 7);
+          p.Cost = new RemoveCounters(CounterType.Loyalty, 7);
 
           p.Effect = () => new SearchLibraryPutToZone(
             zone: Zone.Battlefield,

@@ -13,7 +13,7 @@
       {
         var liliana = C("Liliana Vess");
 
-        Battlefield(P1, liliana.AddCounters(9, CounterType.Loyality));
+        Battlefield(P1, liliana.AddCounters(9, CounterType.Loyalty));
         Graveyard(P1, "Shivan Dragon");
         Graveyard(P2, "Shivan Dragon");
 
@@ -32,7 +32,7 @@
 
         Hand(P1, "Sign in Blood");
         
-        Battlefield(P1, liliana.AddCounters(5, CounterType.Loyality), "Swamp", "Swamp", 
+        Battlefield(P1, liliana.AddCounters(5, CounterType.Loyalty), "Swamp", "Swamp", 
           "Swamp", "Swamp", "Swamp", "Swamp", "Swamp", "Swamp");
         
         Library(P1, "Swamp", "Swamp", "Swamp", "Corrupt");

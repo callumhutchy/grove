@@ -389,7 +389,7 @@
             p.Text = String.Format("{0}: Choose a planeswalker to sacrifice.", duplicatePlaneswalkers[i].Name);            
             
             p.SetChooseDecisionResults(candidates => 
-              new ChosenCards(candidates.OrderBy(x => x.Loyality).First()));
+              new ChosenCards(candidates.OrderBy(x => x.Loyalty).First()));
             
             p.SetProcessDecisionResults(results => 
               results[0].Sacrifice());
@@ -430,7 +430,7 @@
 
         else if (permanent.Is().Planeswalker)
         {
-          if (permanent.Loyality == 0)
+          if (permanent.Loyalty == 0)
           {
             permanent.Sacrifice();
           }

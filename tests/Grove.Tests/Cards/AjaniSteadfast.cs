@@ -19,7 +19,7 @@
         
         Equal(17, P2.Life);
         Equal(23, P1.Life);
-        Equal(5, C(ajani).Loyality);
+        Equal(5, C(ajani).Loyalty);
       }
 
       [Fact]
@@ -29,7 +29,7 @@
 
         Hand(P1, "Volcanic Hammer");
         Battlefield(P1, "Mountain", "Mountain");        
-        Battlefield(P2, ajani.AddCounters(3, CounterType.Loyality));
+        Battlefield(P2, ajani.AddCounters(3, CounterType.Loyalty));
 
         RunGame(1);
 
@@ -42,7 +42,7 @@
       {
         var ajani = C("Ajani Steadfast");
         Battlefield(P1, "Trained Armodon");
-        Battlefield(P2, ajani.AddCounters(3, CounterType.Loyality));
+        Battlefield(P2, ajani.AddCounters(3, CounterType.Loyalty));
 
         RunGame(1);
 
@@ -54,12 +54,12 @@
       public void ActivateEmblemToPreventDamageFromDragons()
       {
         var ajani = C("Ajani Steadfast");
-        Battlefield(P1, ajani.AddCounters(11, CounterType.Loyality));
+        Battlefield(P1, ajani.AddCounters(11, CounterType.Loyalty));
         Battlefield(P2, "Shivan Dragon", "Shivan Dragon", "Shivan Dragon");
 
         RunGame(2);
 
-        Equal(1, C(ajani).Loyality);
+        Equal(1, C(ajani).Loyalty);
         Equal(20, P1.Life);
       }
     }

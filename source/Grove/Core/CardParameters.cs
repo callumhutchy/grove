@@ -32,7 +32,7 @@
     public List<StaticAbility> StaticAbilities = new List<StaticAbility>();
     public CardText Text = String.Empty;
     public int? Toughness;
-    public int? Loyality;
+    public int? Loyalty;
     public int CombatCost;
     public CardType Type;
 

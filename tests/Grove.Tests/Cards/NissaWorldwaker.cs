@@ -12,7 +12,7 @@
       {
         var nissa = C("Nissa, Worldwaker");
 
-        Battlefield(P1, nissa.AddCounters(9, CounterType.Loyality));
+        Battlefield(P1, nissa.AddCounters(9, CounterType.Loyalty));
         Library(P1, "Grizzly Bears", "Island", "Island", "Forest", "Grizzly Bears", "Forest", "Forest");
 
         P2.Life = 20;

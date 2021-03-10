@@ -13,9 +13,9 @@
         </Style.Triggers>
       </Style>
 
-      <Style TargetType="Grid" x:Key="Loyality">
+      <Style TargetType="Grid" x:Key="Loyalty">
         <Style.Triggers>
-          <DataTrigger Binding="{Binding Path=Loyality}" Value="{x:Null}">
+          <DataTrigger Binding="{Binding Path=Loyalty}" Value="{x:Null}">
             <Setter Property="Visibility" Value="Hidden" />
           </DataTrigger>
 
@@ -232,11 +232,11 @@
               </TextBlock>
             </StackPanel>
 
-            <Grid Grid.Column="2" Style="{StaticResource Loyality}" Margin="0,0,0,0">
+            <Grid Grid.Column="2" Style="{StaticResource Loyalty}" Margin="0,0,0,0">
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
               </Grid.ColumnDefinitions>
-              <TextBlock Foreground="White" FontSize="22" FontFamily="Arial" Text="{Binding Path=Loyality}" HorizontalAlignment="Center" Margin="0,0,20,0" />
+              <TextBlock Foreground="White" FontSize="22" FontFamily="Arial" Text="{Binding Path=Loyalty}" HorizontalAlignment="Center" Margin="0,0,20,0" />
             </Grid>
           </Grid>
         </StackPanel>
