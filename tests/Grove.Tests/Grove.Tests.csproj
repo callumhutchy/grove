@@ -705,6 +705,7 @@
     <Compile Include="Cards\Y\YawgmothsEdict.cs" />
     <Compile Include="Cards\Y\YisanTheWandererBard.cs" />
     <Compile Include="Cards\Z\ZofShade.cs" />
+    <Compile Include="Core\NoMaximumHandSize.cs" />
     <Compile Include="DeckBuilderFacts.cs" />
     <Compile Include="DraftFacts.cs" />
     <Compile Include="Infrastructure\Counters.cs" />

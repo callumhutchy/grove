@@ -38,6 +38,16 @@
         Equal(7, P1.Hand.Count());
       }
 
+      [Fact]
+      public void Tap()
+      {
+        Hand(P1, "Grizzly Bears");
+        Battlefield(P1, "Forest","Thought Vessel");
+        P2.Life = 2;
+        RunGame(3);
+        Equal(0, P2.Life);
+      }
+
     }
   }
 }

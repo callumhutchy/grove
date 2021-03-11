@@ -3,15 +3,17 @@
   public class NoMaximumHandSize : Modifier, IPlayerModifier
   {
     private HandLimit handLimit;
+    private readonly IntegerSetter _integerSetter = new IntegerSetter(9999);
     public override void Apply(HandLimit _handLimit)
     {
       handLimit = _handLimit;
-      handLimit.ChangeBaseValue(9999);
+      _integerSetter.Initialize(ChangeTracker);
+      handLimit.AddModifier(_integerSetter);
     }
 
     protected override void Unapply()
     {
-      handLimit.ChangeBaseValue(7);
+      handLimit.RemoveModifier(_integerSetter);
     }
   }
 }

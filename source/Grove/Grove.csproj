@@ -514,6 +514,7 @@
     <Compile Include="CardsLibrary\R\ReclamationSage.cs" />
     <Compile Include="CardsLibrary\R\Refocus.cs" />
     <Compile Include="CardsLibrary\R\ReliquaryMonk.cs" />
+    <Compile Include="CardsLibrary\R\ReliquaryTower.cs" />
     <Compile Include="CardsLibrary\R\Repercussion.cs" />
     <Compile Include="CardsLibrary\R\Replenish.cs" />
     <Compile Include="CardsLibrary\R\Rescue.cs" />
@@ -585,6 +586,7 @@
     <Compile Include="CardsLibrary\S\SoulOfZendikar.cs" />
     <Compile Include="CardsLibrary\S\SowingSalt.cs" />
     <Compile Include="CardsLibrary\S\SpectraWard.cs" />
+    <Compile Include="CardsLibrary\S\Spellbook.cs" />
     <Compile Include="CardsLibrary\S\SpiritBonds.cs" />
     <Compile Include="CardsLibrary\S\StabWound.cs" />
     <Compile Include="CardsLibrary\S\StaffOfTheDeathMagus.cs" />

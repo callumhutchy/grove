@@ -100,7 +100,7 @@
 
     public bool HasAttackedThisTurn { get { return IsActive && Game.Turn.Events.HasActivePlayerAttackedThisTurn; } }
 
-    public int NumberOfCardsAboveMaximumHandSize { get { return Math.Max(0, (_hand.Count() -  (int)_handLimit.BaseValue)); } }
+    public int NumberOfCardsAboveMaximumHandSize { get { return Math.Max(0, (_hand.Count() -  (int)_handLimit.Value)); } }
 
     public IEnumerable<Emblem> Emblems { get { return _emblems; } }    
 
