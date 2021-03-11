@@ -18,8 +18,8 @@
 
         RunGame(3);
 
-        Equals(3, C(garruk).Loyalty);
-        Equals(2, P1.Battlefield.Creatures.Count());
+        Equal(3, C(garruk).Loyalty);
+        Equal(2, P1.Battlefield.Creatures.Count());
       }
 
       [Fact]
@@ -31,8 +31,8 @@
         P1.Life = 1;
         RunGame(2);
 
-        Equals(1, C(garruk).Loyalty);
-        Equals(3, P2.Life);
+        Equal(1, C(garruk).Loyalty);
+        Equal(3, P1.Life);
       }
 
 

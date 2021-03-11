@@ -5,5 +5,6 @@
     void Apply(LandLimit landLimit);
     void Apply(ContiniousEffects continiousEffects);
     void Apply(SkipSteps skipSteps);
+    void Apply(HandLimit handLimit);
   }
 }

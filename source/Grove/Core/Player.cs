@@ -22,6 +22,7 @@
     private readonly Trackable<bool> _hasPriority = new Trackable<bool>();
     private readonly Trackable<bool> _isActive = new Trackable<bool>();
     private readonly LandLimit _landLimit = new LandLimit(1);
+    private readonly HandLimit _handLimit = new HandLimit(7);
     private readonly Trackable<int> _landsPlayedCount = new Trackable<int>(0);
     private readonly Library _library;
     private readonly Life _life = new Life(20);
@@ -59,6 +60,7 @@
         yield return _landLimit;
         yield return _continiousEffects;
         yield return _skipSteps;
+        yield return _handLimit;
       }
     }
 
@@ -98,7 +100,7 @@
 
     public bool HasAttackedThisTurn { get { return IsActive && Game.Turn.Events.HasActivePlayerAttackedThisTurn; } }
 
-    public int NumberOfCardsAboveMaximumHandSize { get { return Math.Max(0, _hand.Count - 7); } }
+    public int NumberOfCardsAboveMaximumHandSize { get { return Math.Max(0, (_hand.Count() -  (int)_handLimit.BaseValue)); } }
 
     public IEnumerable<Emblem> Emblems { get { return _emblems; } }    
 
@@ -159,6 +161,7 @@
       Publish(new DamageDealtEvent(this, damage));
     }
 
+
     public int Life
     {
       get { return _life.Value; }
@@ -193,7 +196,8 @@
         calc.Calculate(_library),
         calc.Calculate(_hand),
         _landLimit.Value.GetValueOrDefault(),
-        _landsPlayedCount.Value
+        _landsPlayedCount.Value,
+        _handLimit.Value.GetValueOrDefault()
         );
     }
 
@@ -253,6 +257,7 @@
       _exile.Initialize(Game);
       _skipSteps.Initialize(ChangeTracker);
       _emblems.Initialize(ChangeTracker);
+      _handLimit.Initialize(Game, null);
 
       LoadLibrary();
     }

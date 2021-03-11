@@ -81,6 +81,7 @@
     public virtual void Apply(DamageRedirections damageRedirections) {}
     public virtual void Apply(ContiniousEffects continiousEffects) {}
     public virtual void Apply(LandLimit landLimit) {}
+    public virtual void Apply(HandLimit handLimit) { }
     public virtual void Apply(Strenght strenght) {}
     public virtual void Apply(SkipSteps skipSteps) {}
     public virtual void Apply(CostModifiers costModifiers) {}
