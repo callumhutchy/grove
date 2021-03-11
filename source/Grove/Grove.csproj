@@ -258,6 +258,7 @@
     <Compile Include="CardsLibrary\C\ConeOfFlame.cs" />
     <Compile Include="CardsLibrary\C\ConstrictingSliver.cs" />
     <Compile Include="CardsLibrary\C\CoralBarrier.cs" />
+    <Compile Include="CardsLibrary\C\CorpseKnight.cs" />
     <Compile Include="CardsLibrary\C\CovenantOfBlood.cs" />
     <Compile Include="CardsLibrary\C\CovetousDragon.cs" />
     <Compile Include="CardsLibrary\C\CracklingDoom.cs" />
@@ -275,6 +276,7 @@
     <Compile Include="CardsLibrary\D\DazzlingRamparts.cs" />
     <Compile Include="CardsLibrary\D\DeadDrop.cs" />
     <Compile Include="CardsLibrary\D\DebilitatingInjury.cs" />
+    <Compile Include="CardsLibrary\D\Decimate.cs" />
     <Compile Include="CardsLibrary\D\DevouringLight.cs" />
     <Compile Include="CardsLibrary\D\DiffusionSliver.cs" />
     <Compile Include="CardsLibrary\D\DiplomacyOfTheWastes.cs" />
@@ -290,6 +292,7 @@
     <Compile Include="CardsLibrary\D\DragonscaleBoon.cs" />
     <Compile Include="CardsLibrary\D\DragonscaleGeneral.cs" />
     <Compile Include="CardsLibrary\D\DragonStyleTwins.cs" />
+    <Compile Include="CardsLibrary\D\Dreadbore.cs" />
     <Compile Include="CardsLibrary\D\DromokaDunecaster.cs" />
     <Compile Include="CardsLibrary\E\EliteScaleguard.cs" />
     <Compile Include="CardsLibrary\E\ElvishLookout.cs" />
@@ -576,6 +579,7 @@
     <Compile Include="CardsLibrary\S\SliverHivelord.cs" />
     <Compile Include="CardsLibrary\S\SmiteTheMonstrous.cs" />
     <Compile Include="CardsLibrary\S\SolemnOffering.cs" />
+    <Compile Include="CardsLibrary\S\SolemnSimulacrum.cs" />
     <Compile Include="CardsLibrary\S\Solidarity.cs" />
     <Compile Include="CardsLibrary\S\Soulmender.cs" />
     <Compile Include="CardsLibrary\S\SoulOfInnistrad.cs" />

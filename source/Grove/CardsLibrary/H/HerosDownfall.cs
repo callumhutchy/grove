@@ -21,7 +21,7 @@
           p.Effect = () => new DestroyTargetPermanents();
 
           p.TargetSelector.AddEffect(trg => trg
-            .Is.Card(c => c.Is().Creature || c.Is().Planeswalker, ControlledBy.Any)
+            .Is.CreatureOrPlaneswalker()
             .On.Battlefield());
 
           p.TargetingRule(new EffectDestroy());

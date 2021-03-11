@@ -204,6 +204,7 @@
     <Compile Include="Cards\C\ConstrictingSliver.cs" />
     <Compile Include="Cards\C\CopperGnomes.cs" />
     <Compile Include="Cards\C\CoralBarrier.cs" />
+    <Compile Include="Cards\C\CorpseKnight.cs" />
     <Compile Include="Cards\C\CovetousDragon.cs" />
     <Compile Include="Cards\C\CracklingDoom.cs" />
     <Compile Include="Cards\C\CratersClaws.cs" />
@@ -222,6 +223,7 @@
     <Compile Include="Cards\D\DayOfJudgment.cs" />
     <Compile Include="Cards\D\DeadDrop.cs" />
     <Compile Include="Cards\D\DeathlessAngel.cs" />
+    <Compile Include="Cards\D\Decimate.cs" />
     <Compile Include="Cards\D\DefenseOfTheHeart.cs" />
     <Compile Include="Cards\D\DelusionsOfMediocrity.cs" />
     <Compile Include="Cards\D\DerangedHermit.cs" />
@@ -246,6 +248,7 @@
     <Compile Include="Cards\D\DragonscaleGeneral.cs" />
     <Compile Include="Cards\D\DragonStyleTwins.cs" />
     <Compile Include="Cards\D\Dread.cs" />
+    <Compile Include="Cards\D\Dreadbore.cs" />
     <Compile Include="Cards\D\Duress.cs" />
     <Compile Include="Cards\D\DyingWail.cs" />
     <Compile Include="Cards\E\EasternPaladin.cs" />

@@ -130,9 +130,34 @@
       return Card(x => x.Is().Creature, controlledBy, canTargetSelf);
     }
 
-    public IsValidZoneBuilder Enchantment()
+    public IsValidZoneBuilder Planeswalker(ControlledBy? controlledBy = null, bool canTargetSelf = true)
     {
-      return Card(x => x.Is().Enchantment);
+      return Card(x => x.Is().Planeswalker, controlledBy, canTargetSelf);
+    }
+
+    public IsValidZoneBuilder Artifact(ControlledBy? controlledBy = null, bool canTargetSelf = true)
+    {
+      return Card(x => x.Is().Artifact, controlledBy, canTargetSelf);
+    }
+
+    public IsValidZoneBuilder CreatureOrPlaneswalker(ControlledBy? controlledBy = null, bool canTargetSelf = true)
+    {
+      return Card(x => (x.Is().Creature || x.Is().Planeswalker), controlledBy, canTargetSelf);
+    }
+
+    public IsValidZoneBuilder ArtifactOrEnchantment(ControlledBy? controlledBy = null, bool canTargetSelf = true)
+    {
+      return Card(x => (x.Is().Artifact || x.Is().Enchantment), controlledBy, canTargetSelf);
+    }
+
+    public IsValidZoneBuilder Enchantment(ControlledBy? controlledBy = null, bool canTargetSelf = true)
+    {
+      return Card(x => x.Is().Enchantment, controlledBy, canTargetSelf);
+    }
+
+    public IsValidZoneBuilder Land(ControlledBy? controlledBy = null, bool canTargetSelf = true)
+    {
+      return Card(x => x.Is().Land, controlledBy, canTargetSelf);
     }
 
 

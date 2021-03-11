@@ -20,7 +20,7 @@
           {
             p.Effect = () => new DestroyTargetPermanents();
             p.TargetSelector.AddEffect(trg => trg
-              .Is.Card(card => card.Is().Artifact || card.Is().Enchantment)
+              .Is.ArtifactOrEnchantment()
               .On.Battlefield());
 
             p.TargetingRule(new EffectDestroy());
