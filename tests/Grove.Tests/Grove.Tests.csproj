@@ -251,6 +251,7 @@
     <Compile Include="Cards\D\Dreadbore.cs" />
     <Compile Include="Cards\D\Duress.cs" />
     <Compile Include="Cards\D\DyingWail.cs" />
+    <Compile Include="Cards\T\ThunderbreakRegent.cs" />
     <Compile Include="Cards\E\EasternPaladin.cs" />
     <Compile Include="Cards\E\Electryte.cs" />
     <Compile Include="Cards\E\EleshNornGrandCenobite.cs" />

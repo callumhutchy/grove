@@ -629,6 +629,7 @@
     <Compile Include="CardsLibrary\T\ThranDynamo.cs" />
     <Compile Include="CardsLibrary\T\ThranFoundry.cs" />
     <Compile Include="CardsLibrary\T\Throttle.cs" />
+    <Compile Include="CardsLibrary\T\ThunderbreakRegent.cs" />
     <Compile Include="CardsLibrary\T\TimelyHordemate.cs" />
     <Compile Include="CardsLibrary\T\TirelessMissionaries.cs" />
     <Compile Include="CardsLibrary\T\TitanicGrowth.cs" />
