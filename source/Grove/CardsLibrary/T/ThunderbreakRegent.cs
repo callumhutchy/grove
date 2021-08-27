@@ -15,10 +15,11 @@
       yield return Card
         .Named("Thunderbreak Regent")
         .ManaCost("{2}{R}{R}")
-        .Type("Creature - Dragon")
+        .Type("Creature Dragon")
         .Text("{Flying}{EOL}Whenever a Dragon you control becomes the target of a spell or ability an opponent controls, Thunderbreak Regent deals 3 damage to that player.")
         .Power(4)
         .Toughness(4)
+        .SimpleAbilities(Static.Flying)
         .TriggeredAbility(p =>
         {
           p.Text = "Whenever a Dragon you control becomes the target of a spell or ability an opponent controls, Thunderbreak Regent deals 3 damage to that player.";

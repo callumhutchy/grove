@@ -10,7 +10,7 @@
   using Xunit;
   using Infrastructure;
 
-  public class ThunderbreakRegent 
+  public class ThunderbreakRegent
   {
     public class Ai : AiScenario
     {
@@ -20,14 +20,15 @@
         var regent = C("Thunderbreak Regent");
         var plummet = C("Plummet");
         Hand(P1, plummet);
-        Battlefield(P1, "Forest","Forest");
+        Battlefield(P1, "Forest", "Forest");
         Battlefield(P2, regent);
-        P1.Life = 25;
+
         Exec(
           At(Step.FirstMain)
-            .Cast(plummet, target: regent)
-            .Verify(() =>Equal(22, P1.Life))
-        );
+          .Cast(plummet)
+          );
+
+        Equal(17, P1.Life);
       }
     }
   }
