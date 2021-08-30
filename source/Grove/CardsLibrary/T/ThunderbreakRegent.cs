@@ -27,13 +27,10 @@
           {
             if (effect.Controller == trigger.Controller)
               return false;
-
             return target.IsCard() && target.Card().Is("dragon") && target.Card().Controller == trigger.Controller;
           }));
-
           p.TriggerOnlyIfOwningCardIsInPlay = true;
-
-            p.Effect = () => new DealDamageToPlayer(3, P(e=>e.Effect().Controller));
+          p.Effect = () => new DealDamageToPlayer(amount: 3, player: P(e => e.TriggerMessage<Events.EffectPutOnStackEvent>().Effect.Controller));
         });
     }
   }
