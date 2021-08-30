@@ -22,13 +22,11 @@
         Hand(P1, plummet);
         Battlefield(P1, "Forest", "Forest");
         Battlefield(P2, regent);
+        P1.Life = 4;
 
-        Exec(
-          At(Step.FirstMain)
-          .Cast(plummet)
-          );
+        RunGame(maxTurnCount: 2);
 
-        Equal(17, P1.Life);
+        Equal(1, P1.Life);
       }
     }
   }
