@@ -12,9 +12,8 @@
         var saveGameFile = SavedGames.ReadFromStream(stream);
 
         var gameParameters = GameParameters.Load(
-          player1Controller: PlayerType.Machine,
-          player2Controller: PlayerType.Machine,
-          savedGame: (SavedGame) saveGameFile.Data,
+          new PlayerType[] { PlayerType.Machine, PlayerType.Machine },
+          savedGame: (SavedGame)saveGameFile.Data,
           rollback: rollback,
           searchParameters: searchParameters);
 

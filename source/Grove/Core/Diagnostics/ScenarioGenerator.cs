@@ -3,6 +3,7 @@
   using System;
   using System.Collections.Generic;
   using System.IO;
+  using System.Linq;
   using System.Text;
 
   public static class ScenarioGenerator
@@ -26,24 +27,23 @@ public void Scenario()
     }
 
     public static string WriteScenarioToString(Game game)
-    {            
+    {
       var inner = new StringBuilder();
+      for (int i = 0; i < game.Players.Count(); i++)
+      {
+        Player player = game.Players[i];
+        inner = inner.AppendLine(CreateZone("Hand", player.Hand, (i + 1)));
+        inner = inner.AppendLine(CreateBattlefield(player.Battlefield, (i + 1)));
+        inner = inner.AppendLine(CreateZone("Graveyard", player.Graveyard, (i + 1)));
+        inner = inner.AppendLine(CreateZone("Library", player.Library, (i + 1)));
+        inner = inner.AppendLine(String.Format("P"+(i+1)+".Life={0};", player.Life));
+      }
 
-      inner = inner.AppendLine(CreateZone("Hand", game.Players.Player1.Hand, 1));
-      inner = inner.AppendLine(CreateZone("Hand", game.Players.Player2.Hand, 2));
-      inner = inner.AppendLine(CreateBattlefield(game.Players.Player1.Battlefield, 1));
-      inner = inner.AppendLine(CreateBattlefield(game.Players.Player2.Battlefield, 2));
-      inner = inner.AppendLine(CreateZone("Graveyard", game.Players.Player1.Graveyard, 1));
-      inner = inner.AppendLine(CreateZone("Graveyard", game.Players.Player2.Graveyard, 2));
-      inner = inner.AppendLine(CreateZone("Library", game.Players.Player1.Library, 1));
-      inner = inner.AppendLine(CreateZone("Library", game.Players.Player2.Library, 2));      
-      inner = inner.AppendLine(String.Format("P1.Life={0};", game.Players.Player1.Life));
-      inner = inner.AppendLine(String.Format("P2.Life={0};", game.Players.Player2.Life));
       inner = inner.AppendLine("RunGame(1);");
-      
+
       return String.Format(ScenarioTemplate, inner);
-    }    
-    
+    }
+
     private static string CreateBattlefield(IEnumerable<Card> cards, int player)
     {
       var sb = new StringBuilder();

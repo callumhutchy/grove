@@ -27,14 +27,22 @@
               "At the beginning of each player's upkeep, if that player controls more lands than each other player, the player puts a 1/1 green Saproling creature token onto the battlefield.";
 
             p.Trigger(new OnStepStart(Step.Upkeep, activeTurn: true, passiveTurn: true)
-              {
-                Condition = ctx =>
+            {
+              Condition = ctx =>
+                {
+                  var activeCount = ctx.Players.Active.Battlefield.Lands.Count();
+                  bool greaterThanEveryone = true;
+                  foreach (Player player in ctx.Players.Passive)
                   {
-                    var activeCount = ctx.Players.Active.Battlefield.Lands.Count();
-                    var passiveCount = ctx.Players.Passive.Battlefield.Lands.Count();
-                    return activeCount > passiveCount;
+                    if (player.Battlefield.Lands.Count() > activeCount)
+                    {
+                      greaterThanEveryone = false;
+                      break;
+                    }
                   }
-              });
+                  return greaterThanEveryone;
+                }
+            });
 
             p.Effect = () => new CreateTokens(
               count: 1,

@@ -50,7 +50,11 @@
           return Target.Player().Graveyard.Where(c => _filter(this, c)).ToList();
         }
 
-        return Players.Player1.Graveyard.Where(c => _filter(this, c)).Concat(Players.Player2.Graveyard.Where(c => _filter(this, c))).ToList();
+        List<Card> cards = new List<Card>();
+        foreach (Player p in Players.PlayerList)
+          cards.AddRange(p.Graveyard.Where(c => _filter(this, c)));
+
+        return cards;
       }
 
       throw new NotSupportedException("Zone is not supported: " + _from);

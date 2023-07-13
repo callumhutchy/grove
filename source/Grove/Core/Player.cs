@@ -48,7 +48,7 @@
     public PlayerType Type { get; private set; }
     public string Name { get; private set; }
 
-    public Player Opponent { get { return Players.GetOpponent(this); } }
+    public Player[] Opponents { get { return Players.GetOpponents(this); } }
 
     public int LandsPlayedCount { get { return _landsPlayedCount.Value; } set { _landsPlayedCount.Value = value; } }
 

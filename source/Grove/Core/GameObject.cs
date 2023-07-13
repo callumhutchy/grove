@@ -56,9 +56,8 @@
     public List<ITarget> GenerateTargets(Func<Zone, Player, bool> zoneFilter)
     {
       var targets = new List<ITarget>();
-
-      Players.Player1.GetTargets(zoneFilter, targets);
-      Players.Player2.GetTargets(zoneFilter, targets);
+      foreach (Player player in Players.PlayerList)
+        player.GetTargets(zoneFilter, targets);
       Stack.GenerateTargets(zoneFilter, targets);
 
       return targets;

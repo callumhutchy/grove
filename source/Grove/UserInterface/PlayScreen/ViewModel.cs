@@ -4,6 +4,7 @@
   using System.Collections.Generic;
   using System.Linq;
   using System.Threading;
+  using Castle.Core.Internal;
   using Diagnostics;
   using Events;
   using Infrastructure;
@@ -16,14 +17,14 @@
     IDisposable
   {
     private readonly List<object> _largeDialogs = new List<object>();
-    private readonly List<object> _smallDialogs = new List<object>();    
+    private readonly List<object> _smallDialogs = new List<object>();
 
     public object LargeDialog { get { return _largeDialogs.FirstOrDefault(); } }
     public MagnifiedCard.ViewModel MagnifiedCard { get; set; }
     public ManaPool.ViewModel ManaPool { get; set; }
-    public Battlefield.ViewModel OpponentsBattlefield { get; private set; }
+    public Battlefield.ViewModel[] OpponentsBattlefield { get; private set; }
     public PlayerBox.ViewModel You { get; private set; }
-    public PlayerBox.ViewModel Opponent { get; private set; }
+    public PlayerBox.ViewModel[] Opponents { get; private set; }
     public virtual string SearchInProgressMessage { get; set; }
     public object SmallDialog { get { return _smallDialogs.FirstOrDefault(); } }
     public Stack.ViewModel StackVm { get; set; }
@@ -38,10 +39,10 @@
     {
       ManaPool.Dispose();
       YourBattlefield.Dispose();
-      OpponentsBattlefield.Dispose();
+      OpponentsBattlefield.ForEach(x => x.Dispose());
       Zones.Dispose();
       You.Dispose();
-      Opponent.Dispose();
+      Opponents.ForEach(x => x.Dispose());
     }
 
     [Updates("SmallDialog", "LargeDialog")]
@@ -181,11 +182,17 @@
     }
 
     public override void Initialize()
-    {      
-      OpponentsBattlefield = ViewModels.Battlefield.Create(Players.Computer);
+    {
+      OpponentsBattlefield = new Battlefield.ViewModel[Players.Computers.Length];
+      Opponents = new PlayerBox.ViewModel[Players.Computers.Length];
+      for (int i = 0; i < Players.Computers.Length; i++)
+      {
+        OpponentsBattlefield[i] = ViewModels.Battlefield.Create(Players.Computers[i]);
+        Opponents[i] = ViewModels.PlayerBox.Create(Players.Computers[i]);
+      }
+
       YourBattlefield = ViewModels.Battlefield.Create(Players.Human);
       You = ViewModels.PlayerBox.Create(Players.Human);
-      Opponent = ViewModels.PlayerBox.Create(Players.Computer);
     }
 
     public void GenerateTestScenario()
@@ -197,7 +204,8 @@
     public void QuitGame()
     {
       var dialog = ViewModels.QuitGame.Create();
-      ((IClosable) dialog).Closed += delegate { QuitGameDialog = null; };
+      ((IClosable)dialog).Closed += delegate
+      { QuitGameDialog = null; };
 
       QuitGameDialog = dialog;
     }

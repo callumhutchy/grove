@@ -6,6 +6,7 @@
   using System.IO;
   using System.Linq;
   using System.Threading;
+  using Castle.Core.Internal;
   using Diagnostics;
   using Events;
   using Infrastructure;
@@ -13,8 +14,7 @@
   public class SearchRunner
   {
     private readonly Game _game;
-    private readonly SearchResults _player1Results = new SearchResults();
-    private readonly SearchResults _player2Results = new SearchResults();
+    private readonly SearchResults[] _playersResults;
     private readonly Queue<int> _searchDurations = new Queue<int>(new[] {0});
     private readonly SearchParameters _searchParameters;
     public Search CurrentSearch;
@@ -25,6 +25,8 @@
     {
       _game = game;
       _searchParameters = searchParameters;
+
+      _playersResults = new SearchResults[game.Players.Count()];
 
       CurrentDepth = _searchParameters.SearchDepth;
       CurrentTargetCount = _searchParameters.TargetCount;
@@ -132,10 +134,7 @@
 
     private SearchResults GetCachedResults(Player player)
     {
-      if (player == _game.Players.Player1)
-        return _player1Results;
-
-      return _player2Results;
+      return _playersResults[_game.Players.ToList().IndexOf(player)];
     }
 
     private int StartNewSearch(ISearchNode searchNode, SearchResults cachedResults)
@@ -173,8 +172,7 @@
 
     private void ClearResultCache()
     {
-      _player1Results.Clear();
-      _player2Results.Clear();
+      _playersResults.ForEach(x => x.Clear());
     }
 
     private void UpdateSearchDurations()

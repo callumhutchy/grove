@@ -11,7 +11,7 @@
 
   [Copyable]
   public class Game : IModifiable
-  {    
+  {
     private readonly CostModifiers _costModifiers;
     private readonly DamagePreventions _damagePreventions;
     private readonly DamageRedirections _damageRedirections;
@@ -25,7 +25,7 @@
     private readonly Trackable<bool> _wasStopped;
     private int _turnLimit = int.MaxValue;
 
-    private Game() {}
+    private Game() { }
 
     public Game(GameParameters p)
     {
@@ -41,9 +41,13 @@
       _wasStopped = new Trackable<bool>();
       _stateMachine = new StateMachine();
 
-      var player1 = new Player(p.Player1, p.Player1Controller);
-      var player2 = new Player(p.Player2, p.Player2Controller);
-      Players = new Players(player1, player2);
+      Player[] players = new Player[p.PlayerParameters.Length];
+      for(int i =0; i < players.Length; i++)
+      {
+        players[i] = new Player(p.PlayerParameters[i], p.PlayerControllers[i]);
+      }
+
+      Players = new Players(players);
 
       _damagePreventions = new DamagePreventions();
       _damageRedirections = new DamageRedirections();
@@ -104,7 +108,7 @@
     public Scenario Scenario { get { return _scenario; } }
     public ChangeTracker ChangeTracker { get; private set; }
     public bool WasStopped { get { return _wasStopped.Value; } }
-    public Combat Combat { get; private set; }   
+    public Combat Combat { get; private set; }
     public bool IsFinished { get { return Players.AnyHasLost() || _turnLimit < Turn.TurnCount; } }
     public Players Players { get; private set; }
     public int Score { get { return Players.Score; } }
@@ -112,12 +116,12 @@
     public TurnInfo Turn { get; private set; }
     public SearchRunner Ai { get; private set; }
     public RandomGenerator Random { get; private set; }
-    public GameRecorder Recorder { get; private set; }    
+    public GameRecorder Recorder { get; private set; }
     public Settings Settings { get; private set; }
 
     public void RemoveModifier(IModifier modifier)
     {
-      RemoveModifier((IGameModifier) modifier);
+      RemoveModifier((IGameModifier)modifier);
     }
 
     public void AddModifier(IGameModifier modifier, ModifierParameters p)
@@ -201,7 +205,7 @@
 
     public void RollbackToSnapshot(object snaphost)
     {
-      ChangeTracker.RollbackToSnapshot((Snapshot) snaphost);
+      ChangeTracker.RollbackToSnapshot((Snapshot)snaphost);
     }
 
     public object CreateSnapshot()
@@ -243,7 +247,7 @@
 
     public void WriteDebugReport(string filename = null)
     {
-      var header = new SaveFileHeader {Description = "Debug information to reproduce a bug which caused the error."};
+      var header = new SaveFileHeader { Description = "Debug information to reproduce a bug which caused the error." };
       var savedGame = Save();
 
       filename = filename ?? String.Format("debug-report-{0}.report", Guid.NewGuid());

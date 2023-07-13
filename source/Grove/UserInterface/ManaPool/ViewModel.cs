@@ -6,10 +6,11 @@
   public class ViewModel : ViewModelBase, IDisposable
   {
     private Timer _timer;
-    
+
     public override void Initialize()
     {
-      _timer = new Timer(delegate { Update(); }, null,
+      _timer = new Timer(delegate
+      { Update(); }, null,
         TimeSpan.FromMilliseconds(20),
         TimeSpan.FromMilliseconds(20));
     }
@@ -38,11 +39,13 @@
       Update(() => GreenCount != pool.Green, () => GreenCount = pool.Green);
       Update(() => ColorlessCount != pool.Colorless, () => ColorlessCount = pool.Colorless);
       Update(() => MultiCount != pool.Multi, () => MultiCount = pool.Multi);
+
     }
 
     private static void Update(Func<bool> condition, Action update)
     {
-      if (condition()) update();
+      if (condition())
+        update();
     }
   }
 }

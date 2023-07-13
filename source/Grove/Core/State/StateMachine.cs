@@ -3,6 +3,7 @@
   using System;
   using System.Collections.Generic;
   using System.Linq;
+  using Castle.Core.Internal;
   using Decisions;
   using Events;
   using Infrastructure;
@@ -48,7 +49,7 @@
     public void Resume(Func<bool> shouldContinue)
     {
       while (ExecutePendingDecisions(shouldContinue))
-      {        
+      {
         var nextState = _currentState.Value.Next();
 
         if (nextState == null)
@@ -126,7 +127,7 @@
     }
 
     private bool ExecutePendingDecisions(Func<bool> shouldContinue)
-    {     
+    {
       var should = false;
 
       while (shouldContinue())
@@ -140,13 +141,13 @@
           }
 
           var decision = _decisionQueue.Dequeue();
-          CurrentHandler = decision.CreateHandler(Game);          
+          CurrentHandler = decision.CreateHandler(Game);
         }
 
         // execute is called multiple times, during
         // search tree generation        
-        CurrentHandler.Execute();        
-      }      
+        CurrentHandler.Execute();
+      }
 
       return should;
     }
@@ -180,7 +181,7 @@
         getsPriority: false);
 
       mulligan = NewStep(Step.Mulligan,
-        new Action[] {TakeMulligans},
+        new Action[] { TakeMulligans },
         next: () => Players.AnotherMulliganRound ? mulligan : untap,
         getsPriority: false);
 
@@ -346,16 +347,16 @@
 
     private StepNode NewStep(Step step, bool getsPriority, Func<StepNode> next)
     {
-      return new StepNode(step, CreateStates(new Action[] {}, getsPriority), next);
+      return new StepNode(step, CreateStates(new Action[] { }, getsPriority), next);
     }
 
     private void CheckAndMovePermanentsToGraveyard()
     {
       MovePermanentsToGraveyard(Players.Active);
       MovePermanentsToGraveyard(Players.Passive);
-      
+
       CheckLegendaryRule();
-      
+
       CheckPlaneswalkerRule(Players.Active);
       CheckPlaneswalkerRule(Players.Passive);
     }
@@ -377,21 +378,21 @@
         .GetDuplicates(x => x.Name)
         .ToArray();
 
-      for (int i = 0; i < duplicatePlaneswalkers.Length; i+=2)
+      for (int i = 0; i < duplicatePlaneswalkers.Length; i += 2)
       {
         Enqueue(new SelectCards(player, p =>
           {
             p.MinCount = 1;
             p.MaxCount = 1;
             p.Zone = Zone.Battlefield;
-            p.ValidCards = new List<Card> {duplicatePlaneswalkers[i], duplicatePlaneswalkers[i + 1]};
+            p.ValidCards = new List<Card> { duplicatePlaneswalkers[i], duplicatePlaneswalkers[i + 1] };
             p.SetValidator(c => p.ValidCards.Contains(c));
-            p.Text = String.Format("{0}: Choose a planeswalker to sacrifice.", duplicatePlaneswalkers[i].Name);            
-            
-            p.SetChooseDecisionResults(candidates => 
+            p.Text = String.Format("{0}: Choose a planeswalker to sacrifice.", duplicatePlaneswalkers[i].Name);
+
+            p.SetChooseDecisionResults(candidates =>
               new ChosenCards(candidates.OrderBy(x => x.Loyality).First()));
-            
-            p.SetProcessDecisionResults(results => 
+
+            p.SetProcessDecisionResults(results =>
               results[0].Sacrifice());
           }));
       }
@@ -419,7 +420,7 @@
         {
           if (permanent.Toughness <= 0)
           {
-            permanent.Sacrifice();            
+            permanent.Sacrifice();
           }
 
           else if (permanent.HasLeathalDamage || permanent.Life <= 0)
@@ -434,7 +435,7 @@
           {
             permanent.Sacrifice();
           }
-        }        
+        }
       }
     }
 
@@ -449,23 +450,42 @@
         Publish(new AssignedDamageDealtEvent(Turn.Step));
     }
 
+    private bool BiggerNumber(int[] values, out int index)
+    {
+      bool distinct = true;
+      int biggestValue = -1;
+      index = -1;
+      for (int i = 0; i < values.Length; i++)
+      {
+        if (values[i] > biggestValue)
+        {
+          biggestValue = values[i];
+          index = i;
+          distinct = true;
+        }
+        else if (values[i] == biggestValue)
+        {
+          distinct = false;
+        }
+      }
+      return distinct;
+    }
+
     private Player RollDice()
     {
-      int result1;
-      int result2;
+      int[] results = new int[Players.PlayerList.Count()];
+
+      int winningIndex = 0;
 
       while (true)
       {
-        result1 = RollADice();
-        result2 = RollADice();
+        results.ForEach(x => x = RollADice());
 
-        if (result1 != result2)
+        if (BiggerNumber(results, out winningIndex))
           break;
       }
 
-      return result1 > result2
-        ? Players.Player1
-        : Players.Player2;
+      return Players.PlayerList[winningIndex];
     }
 
     private void SelectStartingPlayer()
@@ -510,7 +530,7 @@
                 priorityFinishResolve = null,
                 pushTriggeredActive = null,
                 pushTriggeredPassive = null;
-      
+
 
       if (getsPriority)
       {
@@ -577,7 +597,7 @@
             }
           );
 
-        nodes.Add(priorityPassiveStart);        
+        nodes.Add(priorityPassiveStart);
 
 
         priorityBeginResolve = new StateNode(
@@ -607,9 +627,7 @@
         106,
         () =>
           {
-            Players.Player1.EmptyManaPool();
-            Players.Player2.EmptyManaPool();
-
+            Players.PlayerList.ForEach(x => x.EmptyManaPool());
             Publish(new StepFinishedEvent(Turn.Step));
           },
         () => null);
@@ -628,7 +646,7 @@
 
             return priorityActiveStart;
           });
-      
+
       nodes.Add(pushTriggeredActive);
 
       pushTriggeredPassive = new StateNode(
@@ -645,7 +663,7 @@
           });
 
       nodes.Add(pushTriggeredPassive);
-      
+
       var nextNode = getsPriority ? pushTriggeredActive : priorityAfter;
 
       // create and connect step custom statenodes

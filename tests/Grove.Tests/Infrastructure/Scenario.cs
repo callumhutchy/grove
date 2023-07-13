@@ -14,7 +14,7 @@
   {
     protected static readonly IoC Container = new IoC(IoC.Configuration.Test);
 
-    protected Scenario(bool player1ControlledByScript = true, bool player2ControlledByScript = true,
+    protected Scenario(bool[] playersControlledByScript,
       SearchParameters searchParameters = null)
     {
       var settings = Settings.Load();
@@ -25,7 +25,7 @@
 
       var p = GameParameters.Scenario(player1Controller, player2Controller, searchParameters);
       Game = new Game(p);
-      Game.Players.Starting = Game.Players.Player1;
+      Game.Players.Starting = Game.Players.PlayerList[0];
     }
 
     protected Game Game { get; private set; }

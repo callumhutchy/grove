@@ -6,13 +6,22 @@
   {
     protected override void ResolveEffect()
     {
-      var maxCount = Math.Max(Players.Player1.Hand.Count, Players.Player2.Hand.Count);
+      int greatestDiscardedCount = 0;
+      foreach(Player p in Players.PlayerList)
+        if (p.Hand.Count > greatestDiscardedCount)
+          greatestDiscardedCount = p.Hand.Count;
 
       Players.Active.DiscardHand();
-      Players.Active.DrawCards(maxCount);
+      Players.Active.DrawCards(greatestDiscardedCount);
 
-      Players.Passive.DiscardHand();
-      Players.Passive.DrawCards(maxCount);
+      //TODO make sure this is done in the correct order starting from the active player
+
+      foreach(Player p in Players.Passive)
+      {
+        p.DiscardHand();
+        p.DrawCards(greatestDiscardedCount);
+      }
+
     }
   }
 }

@@ -36,9 +36,10 @@
     {
       get
       {
-        return Players.Player1.HasLost
-          ? Players.Player2.AvatarId
-          : Players.Player1.AvatarId;
+        foreach (Player p in Players.PlayerList)
+          if (!p.HasLost)
+            return p.AvatarId;
+        return -1;
       }
     }
 
@@ -47,8 +48,8 @@
       get
       {
         return string.Format("{0} won {1}",
-          Players.Player1,
-          GetWinCountText(Match.Player1WinCount));
+          Players.PlayerList[0],
+          GetWinCountText(Match.PlayerWinCounts[0]));
       }
     }
 

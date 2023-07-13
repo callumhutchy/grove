@@ -51,23 +51,22 @@
       var decisions = new MemoryStream();
       _decisionLog.WriteTo(decisions);
 
-      var player1 = _game.Players.Player1;
-      var player2 = _game.Players.Player2;
+      var players = _game.Players.PlayerList;
+
+      PlayerParameters[] pps = new PlayerParameters[players.Length];
+      for (int i = 0;i < pps.Length; i++)
+      {
+        pps[i] = new PlayerParameters()
+        {
+          Name = pps[i].Name,
+          AvatarId = pps[i].AvatarId,
+          Deck = pps[i].Deck
+        };
+      }
 
       var savedGame = new SavedGame
-        {
-          Player1 = new PlayerParameters
-            {
-              Name = player1.Name,
-              AvatarId = player1.AvatarId,
-              Deck = player1.Deck,
-            },
-          Player2 = new PlayerParameters
-            {
-              Name = player2.Name,
-              AvatarId = player2.AvatarId,
-              Deck = player2.Deck,
-            },
+      {
+        PlayerParameters = pps,
           RandomSeed = _game.Random.Seed,
           Decisions = decisions,
           StateCount = _game.Turn.StateCount

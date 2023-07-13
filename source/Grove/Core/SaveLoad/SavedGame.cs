@@ -7,8 +7,7 @@
   public class SavedGame
   {
     public MemoryStream Decisions;
-    public PlayerParameters Player1;
-    public PlayerParameters Player2;
+    public PlayerParameters[] PlayerParameters;
     public int RandomSeed;
     public int StateCount;
   }

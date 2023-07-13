@@ -2,20 +2,29 @@
 {
   using System;
   using System.Diagnostics;
+  using System.Linq;
 
   public static class MatchSimulator
   {
-    public static SimulationResult Simulate(Deck deck1, Deck deck2, int maxTurnsPerGame = 100,
+    public static SimulationResult Simulate(Deck[] decks, int maxTurnsPerGame = 100,
       int maxSearchDepth = 16, int maxTargetsCount = 2)
     {
       var stopwatch = new Stopwatch();
       stopwatch.Start();
 
-      var result = new SimulationResult();
+      var result = new SimulationResult(decks.Count());
 
-      while (result.Deck1WinCount < 2 && result.Deck2WinCount < 2)
+      bool haveWinner = false;
+
+      while (!haveWinner)
       {
-        SimulateGame(deck1, deck2, result, maxTurnsPerGame, maxSearchDepth, maxTargetsCount);
+        SimulateGame(decks, result, maxTurnsPerGame, maxSearchDepth, maxTargetsCount);
+
+        for (int i = 0; i < decks.Length; i++)
+        {
+          if (result.DeckWinCounts[i] >= 2)
+            haveWinner = true;
+        }
       }
 
       stopwatch.Stop();
@@ -25,12 +34,12 @@
       return result;
     }
 
-    private static void SimulateGame(Deck deck1, Deck deck2, SimulationResult result, int maxTurnsPerGame,
+    private static void SimulateGame(Deck[] decks, SimulationResult result, int maxTurnsPerGame,
       int maxSearchDepth, int maxTargetsCount)
     {
       var stopwatch = new Stopwatch();
 
-      var game = new Game(GameParameters.Simulation(deck1, deck2, 
+      var game = new Game(GameParameters.Simulation(decks,
         new SearchParameters(maxSearchDepth, maxTargetsCount, SearchPartitioningStrategies.SingleThreaded)));
 
       game.Ai.SearchStarted += delegate
@@ -58,24 +67,37 @@
       if (game.Players.BothHaveLost)
         return;
 
-      if (game.Players.Player1.Score > -game.Players.Player2.Score)
+      int winningIndex = -1;
+      int greatestScore = 0;
+
+      for(int i =0; i < game.Players.PlayerList.Count(); i++)
       {
-        result.Deck1WinCount++;
-        return;
+        if (game.Players.PlayerList[i].Score > greatestScore)
+        {
+          greatestScore = game.Players.PlayerList[i].Score;
+          winningIndex = i;
+        }
       }
 
-      result.Deck2WinCount++;
+      result.DeckWinCounts[winningIndex]++;
       return;
+
     }
 
     public class SimulationResult
     {
-      public int Deck1WinCount { get; set; }
-      public int Deck2WinCount { get; set; }
+      public int[] DeckWinCounts { get; set; }
       public TimeSpan Duration { get; set; }
       public int TotalTurnCount { get; set; }
       public int TotalSearchCount { get; set; }
       public TimeSpan MaxSearchTime { get; set; }
+
+      public SimulationResult(int count)
+      {
+        DeckWinCounts = new int[count];
+        for(int i =0; i < count; i++)
+          DeckWinCounts[i] = 0;
+      }
     }
   }
 }

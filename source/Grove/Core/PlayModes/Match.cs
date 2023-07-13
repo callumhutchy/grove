@@ -1,8 +1,10 @@
 ﻿namespace Grove
 {
   using System;
+  using System.Linq;
   using System.Threading.Tasks;
   using System.Windows;
+  using Castle.Core.Internal;
   using Grove.Infrastructure;
   using Grove.UserInterface;
 
@@ -36,14 +38,14 @@
     {
       get
       {
-        return
-          Player1WinCount == 2 ||
-            Player2WinCount == 2;
+        foreach (int c in PlayerWinCounts)
+          if (c == 2)
+            return true;
+        return false;
       }
     }
 
-    public int Player1WinCount { get; private set; }
-    public int Player2WinCount { get; private set; }
+    public int[] PlayerWinCounts { get; private set; }
 
     protected Player Looser
     {
@@ -65,8 +67,15 @@
     {
       get
       {
-        return String.Format("{0} vs {1} - {2}. turn", Game.Players.Player1.Name, Game.Players.Player2.Name,
-          Game.Turn.TurnCount);
+        string desc = "";
+        for(int i =0; i < Game.Players.PlayerList.Count(); i++)
+        {
+          desc += Game.Players.PlayerList[i].Name + " ";
+          if (i < Game.Players.PlayerList.Count() - 1)
+            desc += "vs ";
+        }
+        desc += " - " + Game.Turn.TurnCount + ". turn";
+        return desc;
       }
     }
 
@@ -77,13 +86,12 @@
       if (_p.IsSavedMatch)
       {
         game = new Game(GameParameters.Load(
-          player1Controller: PlayerType.Human,
-          player2Controller: PlayerType.Machine,
+          new PlayerType[] { PlayerType.Human, PlayerType.Machine},
           savedGame: _p.SavedMatch.SavedGame,
           looser: _p.SavedMatch.Looser));
 
-        Player1WinCount = _p.SavedMatch.Player1WinCount;
-        Player2WinCount = _p.SavedMatch.Player2WinCount;
+        PlayerWinCounts = _p.SavedMatch.PlayerWinCounts;
+
         _looser = _p.SavedMatch.Looser;
 
         if (game.IsFinished)
@@ -95,8 +103,7 @@
       }
       else
       {
-        game = new Game(GameParameters.Default(
-          _p.Player1, _p.Player2));
+        game = new Game(GameParameters.Default(_p.PlayerParameters));
       }
 
       var shouldPlayAnotherGame = RunGame(game);
@@ -105,14 +112,12 @@
       {
         if (_rematch)
         {
-          Player1WinCount = 0;
-          Player2WinCount = 0;
+          PlayerWinCounts.ForEach(x => x = 0);
           _rematch = false;
           _looser = null;
         }
 
-        game = new Game(GameParameters.Default(
-          _p.Player1, _p.Player2));
+        game = new Game(GameParameters.Default(_p.PlayerParameters));
 
         shouldPlayAnotherGame = RunGame(game);
       }
@@ -140,8 +145,7 @@
     {
       var savedMatch = new SavedMatch
         {
-          Player1WinCount = Player1WinCount,
-          Player2WinCount = Player2WinCount,
+          PlayerWinCounts = PlayerWinCounts,
           SavedGame = Game.Save(),
           Looser = _looser
         };
